@@ -12,6 +12,7 @@ describe('Test', function() {
     fm.version.should.be.ok;
 
     fm.getFMPPVersion(function(err, data) {
+      err.should.not.be.ok;
       data.should.be.ok;
       data.should.match(/FMPP version/);
       done();

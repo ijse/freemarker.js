@@ -7,13 +7,13 @@ var os = require('os');
 var spawn = require('child_process').spawn;
 
 var fmppName = process.platform === 'win32' ? 'fmpp.bat' : 'fmpp';
-
+var fmpp = path.join(__dirname, 'fmpp', fmppName);
 function run(args, done) {
 
   var output = '';
 
   try {
-    var s = spawn(fmppName, args, {
+    var s = spawn(fmpp, args, {
       cwd: path.join(__dirname, 'fmpp'),
       env: process.env
     });
