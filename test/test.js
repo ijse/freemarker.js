@@ -22,14 +22,14 @@ describe('Test', function() {
 
   it('render file', function(done) {
 
-    var tpl = fs.readFileSync(path.join(__dirname, '../template/test.ftl'));
-
-    fm.render(tpl, { word: 'ijse' } , function(err, data) {
+    var tpl = path.join(__dirname, '../template/test.ftl');
+    fm.render(tpl, { word: 'freemarker' } , function(err, result, data) {
+      console.log(err);
+      console.log(result);
       console.log(data);
       data.should.be.ok;
       done();
     });
-
 
   });
 });

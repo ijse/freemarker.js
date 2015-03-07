@@ -12,3 +12,6 @@ Locale: ${.locale}
 
 Current time: ${.now}
 
+---
+
+<#include "/child.ftl" />
