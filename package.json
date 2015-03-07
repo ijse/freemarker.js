@@ -1,10 +1,10 @@
 {
-  "name": "Freemarker.js",
+  "name": "freemarker.js",
   "version": "1.0.0",
   "description": "Make freemarker available for node.js with FMPP.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/ --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -15,6 +15,16 @@
     "fmpp",
     "node.js"
   ],
+  "bin": {
+    "fmpp": "./fmpp/fmpp.bat"
+  },
   "author": "ijse",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^2.2.0",
+    "should": "^5.1.0"
+  },
+  "dependencies": {
+    "node-uuid": "^1.4.3"
+  }
 }
