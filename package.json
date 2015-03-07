@@ -1,0 +1,20 @@
+{
+  "name": "Freemarker.js",
+  "version": "1.0.0",
+  "description": "Make freemarker available for node.js with FMPP.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@coding.net:ijse/freemarker.js.git"
+  },
+  "keywords": [
+    "freemarker",
+    "fmpp",
+    "node.js"
+  ],
+  "author": "ijse",
+  "license": "ISC"
+}
