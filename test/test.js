@@ -24,7 +24,7 @@ describe('Test', function() {
 
     var tpl = fs.readFileSync(path.join(__dirname, '../template/test.ftl'));
 
-    fm.render(tpl, null, function(err, data) {
+    fm.render(tpl, { word: 'ijse' } , function(err, data) {
       console.log(data);
       data.should.be.ok;
       done();

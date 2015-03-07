@@ -4,42 +4,10 @@ var fs = require('fs');
 var uuid = require('node-uuid');
 var os = require('os');
 
-var spawn = require('child_process').spawn;
-
-var fmppName = process.platform === 'win32' ? 'fmpp.bat' : 'fmpp';
-var fmpp = path.join(__dirname, 'fmpp', fmppName);
-function run(args, done) {
-
-  var output = '';
-
-  try {
-    var s = spawn(fmpp, args, {
-      cwd: path.join(__dirname, 'fmpp'),
-      env: process.env
-    });
-
-    s.stdout.on('data', function(d) {
-      output += d;
-    });
-
-    s.stderr.on('data', function(d) {
-      output += d;
-    });
-
-    s.on('error', function(e) {
-      done(e);
-    });
-
-    s.on('close', function(code) {
-      done(code, output);
-    });
-  } catch(e) {
-    done(e);
-  }
-}
+var fmpp = require('./lib/fmpp.js');
 
 function getTmpFileName() {
-  return path.join(__dirname, uuid.v4());
+  return path.join(os.tmpDir(), uuid.v4());
 }
 
 function writeTmpFile(data, done) {
@@ -52,15 +20,22 @@ function writeTmpFile(data, done) {
 
 exports.version = require('./package.json').version;
 exports.getFMPPVersion = function getFMPPVersion(cb) {
-  run(['--version'], cb);
+  fmpp.run(['--version'], cb);
 };
 
+/**
+ * Deal single template
+ * @param  {string}   tpl       template content
+ * @param  {object}   dataModel
+ * @param  {Function} cb        callback
+ */
 exports.render = function render(tpl, dataModel, cb) {
   var outFile = getTmpFileName();
+  var dataTdd = JSON.stringify(dataModel);
 
   writeTmpFile(tpl, function(err, tplFile) {
 
-    run([ tplFile, '-D word: freemarker', '-o', outFile ], function(err, data) {
+    fmpp.run([ tplFile, '-D', dataTdd, '-o', outFile ], function(err, data) {
       if(err) {
         return cb(err);
       }
