@@ -3,7 +3,7 @@ Freemarker.js
 
 *Freemarker.js* is bridge API for [fmpp](http://fmpp.sourceforge.net/) to make [Freemarker](http://freemarker.org) available with node.js.
 
-100% language support as Freemarker on Java.
+100% language support like Freemarker on Java.
 
 
 # References
@@ -37,7 +37,6 @@ fm.render(tpl, dataObject, function(err, html, output) {
 fm.renderBulk(cfgFile, function(err) {
   //...
 });
-
 
 // Other
 Freemarker.exec(['--version'], function(err, output) {
