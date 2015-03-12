@@ -16,10 +16,10 @@
     "node.js"
   ],
   "bin": {
-    "fmpp": "./fmpp/fmpp.bat"
+    "fmpp": "./fmpp/fmpp"
   },
   "author": "ijse",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "mocha": "^2.2.0",
     "should": "^5.1.0"

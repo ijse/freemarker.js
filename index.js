@@ -18,34 +18,90 @@ function writeTmpFile(data, done) {
   });
 }
 
-
-exports.version = require('./package.json').version;
-exports.getFMPPVersion = function getFMPPVersion(cb) {
-  fmpp.run(['--version'], cb);
-};
-
 /**
- * Deal single template
- * @param  {string}   tpl       template filename
- * @param  {object}   dataModel
- * @param  {Function} cb        callback
+ * Freemarker Class
+ *
+ * @param {Object} settings
  */
-exports.render = function render(tpl, dataModel, cb, settings) {
-  var outFile = getTmpFileName();
-  var dataTdd = JSON.stringify(dataModel);
-
-  fmpp.run([ tpl, '-D', dataTdd, '-o', outFile ], function(err, respData) {
-    if(err) {
-      return cb(err);
-    }
-
-    fs.readFile(outFile, function(err, result) {
-      cb(err, '' + result, respData);
-      fs.unlink(outFile, nop);
-    });
-
+function Freemarker(settings) {
+  var sName = Object.keys(settings.options);
+  var args = [];
+  sName.forEach(function(x) {
+    var v = settings.options[x];
+    args.push(stripArg(x, v));
   });
 
+  this.viewRoot = settings.viewRoot;
+  this.options = settings.options;
+  this.stringifyArgs = args;
 }
 
 
+Freemarker.version = require('./package.json').version;
+Freemarker.getFMPPVersion = function getFMPPVersion(cb) {
+  fmpp.run(['--version'], cb);
+};
+
+
+Freemarker.prototype.render = function(tpl, data, done) {
+  var dataTdd = convertDataModel(data);
+  var tplFile = path.join(this.viewRoot, tpl);
+  var args = [tplFile, '-D', dataTdd];
+  var tmpFile;
+  var _this = this;
+
+  tmpFile = getTmpFileName();
+  args.push.apply(args, ['-o', tmpFile]);
+  args.push.apply(args, this.stringifyArgs);
+
+  fmpp.run(args, function(err, respData) {
+    if(err) {
+      return done(err);
+    }
+
+    fs.readFile(tmpFile, function(err, result) {
+      done(err, '' + result, respData);
+      fs.unlink(tmpFile, nop);
+    });
+
+  });
+};
+
+/**
+ * Render views in bulk mode
+ * @param  {String}   cfgFile configuration file
+ * @param  {Function} done    callback
+ */
+Freemarker.prototype.renderBulk = function(cfgFile, done) {
+  fmpp.run(['-C', cfgFile], done);
+};
+
+Freemarker.exec = fmpp.run;
+
+/**
+ * Convert data object to TDD
+ * @param  {Ojbect} data
+ * @return {String}      [description]
+ */
+function convertDataModel(data) {
+  return JSON.stringify(data);
+}
+
+/**
+ * Strip parameter word
+ * @param  {String} s
+ * @return {String}   [description]
+ */
+function stripArg(s, v) {
+  var result = '';
+  var argName = '--' + s.replace(/([A-Z])/g, "-$1").toLowerCase();
+  var argValue = v;
+  if(typeof v !== 'boolean' && argValue) {
+    result += argName + '="' + argValue + '"';
+  } else {
+    result += argName;
+  }
+  return result;
+}
+
+module.exports = Freemarker;

@@ -12,7 +12,7 @@ describe('Test', function() {
     fm.version.should.be.ok;
 
     fm.getFMPPVersion(function(err, data) {
-      err.should.not.be.ok;
+      (!!!err).should.be.true;
       data.should.be.ok;
       data.should.match(/FMPP version/);
       done();
@@ -20,17 +20,41 @@ describe('Test', function() {
 
   });
 
-  it('render file', function(done) {
-
-    var tpl = path.join(__dirname, '../template/test.ftl');
-    fm.render(tpl, { word: 'freemarker' } , function(err, result, data) {
-      console.log(err);
-      console.log(result);
-      console.log(data);
-      data.should.be.ok;
+  it('run fmpp command', function(done) {
+    // run `fmpp --version` and get result
+    fm.exec(['--version'], function(err, result) {
+      (!!!err).should.be.true;
+      result.should.be.match(/FMPP|FreeMarker version/);
       done();
     });
-
   });
+
 });
 
+describe('Test freemarker.js', function() {
+
+  var Freemarker = require('../index.js');
+
+  it('Create new Freemarker.js instance', function(done) {
+    var fm = new Freemarker({
+      viewRoot: path.join(__dirname, './template/'),
+
+      options: {
+        replaceExtensions: "ftl,html"
+      }
+    });
+
+    fm.render('test.ftl', {
+      word: 'Jack'
+    }, function(err, data, out) {
+      (!!!err).should.be.true;
+      data.should.be.match(/Jack/);
+      data.should.be.match(/中文/);
+      data.should.be.match(/¥/);
+      data.should.be.match(/child partial/);
+      out.should.be.match(/DONE/);
+      done();
+    });
+  });
+
+});

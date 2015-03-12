@@ -2,6 +2,8 @@
 
 hello, ${word}.
 
+测试中文和符号¥
+
 ---
 
 Freemarker version: ${.version}
@@ -15,3 +17,4 @@ Current time: ${.now}
 ---
 
 <#include "/child.ftl" />
+
