@@ -13,13 +13,13 @@ Freemarker.js
 
 # Install
 
-```
+```shell
 npm install freemarker.js
 ```
 
 # How to use
 
-```
+```javascript
 var Freemarker = require('freemarker.js');
 var fm = new Freemarker({
   viewRoot: '/template',
@@ -44,6 +44,20 @@ Freemarker.exec(['--version'], function(err, output) {
 });
 
 ```
+
+# Configurations
+
+Avaliable options for fmpp:
+
+ * `sourceEncoding`: The encoding of textual sources (templates). Use the special value "host"(-E host) if the default encoding of the host machine should be used. The default is "ISO-8859-1".
+ * `tagSyntax`: Sets the tag syntax for templates that doesn't start with the ftl directive. Possible values are: angleBracket, squareBracket, autoDetect.
+ * `timeFormat`: The format used to show time values. The default is locale dependent.
+ * `timeZone`: Sets the time zone in which date/time/date-time values are shown. The default is the time zone of the host machine. Example: GMT+02
+ * `numberFormat`: The number format used to show numerical values. The default is 0.############
+ * `dateFormat`: The format used to show date (year+month+day) values. The default is locale dependent.
+ * `booleanFormat`: The boolean format used to show boolean values, like "Yes,No". Not "true,false"; use ${myBool?c} for that. The default is error on ${myBool}.
+ * `datetimeFormat`: The format used to show date-time values. The default is locale dependent.
+ * `locale`: The locale (as ar_SA). Use the special value "host" (-A host) if the default locale of the host machine should be used. The default value of the option is en_US.
 
 # License
 
