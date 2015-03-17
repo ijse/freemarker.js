@@ -57,6 +57,12 @@ describe('Test freemarker.js', function() {
     });
   });
 
+  it('Param viewRoot must be set', function() {
+    (function() {
+      var fm = new Freemarker({});
+    }).should.throw('Freemarker: Need viewRoot param.');
+  });
+
   it('Could include another template with relative path', function(done) {
     var fm = new Freemarker({
       viewRoot: path.join(__dirname, '/template/')

@@ -26,6 +26,9 @@ function writeTmpFile(data, done) {
 function Freemarker(settings) {
   var fmpOpts = settings.options || {};
 
+  if(!settings.viewRoot) {
+    throw new Error('Freemarker: Need viewRoot param.')
+  }
   if(!fmpOpts.sourceRoot) {
     fmpOpts.sourceRoot = settings.viewRoot;
   }
