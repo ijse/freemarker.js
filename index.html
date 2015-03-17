@@ -1,35 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Freemarker.js by ijse</title>
+    <meta name="description" content="Freemarker.js : Make freemarker available for node.js with FMPP.">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Freemarker.js</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Freemarker.js</h1>
-        <p>Make freemarker available for node.js with FMPP.</p>
 
-        <p class="view"><a href="https://github.com/ijse/freemarker.js">View the Project on GitHub <small>ijse/freemarker.js</small></a></p>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/ijse/freemarker.js">View on GitHub</a>
 
+          <h1 id="project_title">Freemarker.js</h1>
+          <h2 id="project_tagline">Make freemarker available for node.js with FMPP.</h2>
 
-        <ul>
-          <li><a href="https://github.com/ijse/freemarker.js/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/ijse/freemarker.js/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/ijse/freemarker.js">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/ijse/freemarker.js/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/ijse/freemarker.js/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>
 <a id="freemarkerjs" class="anchor" href="#freemarkerjs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Freemarker.js</h1>
+
+<blockquote>
+<p>FreeMarker is a "template engine". It's a Java package, a class library for Java programmers.
+<img src="http://freemarker.org/images/overview.png" alt=""></p>
+</blockquote>
 
 <p><em>Freemarker.js</em> is bridge API for <a href="http://fmpp.sourceforge.net/">fmpp</a> to make <a href="http://freemarker.org">Freemarker</a> available with node.js.</p>
 
@@ -46,36 +54,60 @@
 <h1>
 <a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h1>
 
-<pre><code>npm install freemarker.js
-</code></pre>
+<div class="highlight highlight-shell"><pre>npm install freemarker.js</pre></div>
 
 <h1>
 <a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use</h1>
 
-<pre><code>var Freemarker = require('freemarker.js');
-var fm = new Freemarker({
-  viewRoot: '/template',
-  options: {
-    /** for fmpp */
+<div class="highlight highlight-javascript"><pre><span class="pl-s">var</span> Freemarker <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>freemarker.js<span class="pl-pds">'</span></span>);
+<span class="pl-s">var</span> fm <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Freemarker</span>({
+  viewRoot<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>/template<span class="pl-pds">'</span></span>,
+  options<span class="pl-k">:</span> {
+    <span class="pl-c">/** for fmpp */</span>
   }
 });
 
-// Single template file
-fm.render(tpl, dataObject, function(err, html, output) {
-  //...
+<span class="pl-c">// Single template file</span>
+fm.render(tpl, dataObject, <span class="pl-st">function</span>(<span class="pl-vpf">err</span>, <span class="pl-vpf">html</span>, <span class="pl-vpf">output</span>) {
+  <span class="pl-c">//...</span>
 });
 
-// Use fmpp configuration file, see `http://fmpp.sourceforge.net/configfile.html`
-fm.renderBulk(cfgFile, function(err) {
-  //...
+<span class="pl-c">// Use fmpp configuration file, see `http://fmpp.sourceforge.net/configfile.html`</span>
+fm.renderBulk(cfgFile, <span class="pl-st">function</span>(<span class="pl-vpf">err</span>) {
+  <span class="pl-c">//...</span>
 });
 
-// Other
-Freemarker.exec(['--version'], function(err, output) {
-  //
+<span class="pl-c">// Other</span>
+Freemarker.<span class="pl-s3">exec</span>([<span class="pl-s1"><span class="pl-pds">'</span>--version<span class="pl-pds">'</span></span>], <span class="pl-st">function</span>(<span class="pl-vpf">err</span>, <span class="pl-vpf">output</span>) {
+  <span class="pl-c">//</span>
 });
+</pre></div>
 
-</code></pre>
+<h1>
+<a id="configurations" class="anchor" href="#configurations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configurations</h1>
+
+<p>Avaliable options for fmpp:</p>
+
+<ul>
+<li>
+<code>sourceEncoding</code>: The encoding of textual sources (templates). Use the special value "host"(-E host) if the default encoding of the host machine should be used. The default is "ISO-8859-1".</li>
+<li>
+<code>tagSyntax</code>: Sets the tag syntax for templates that doesn't start with the ftl directive. Possible values are: angleBracket, squareBracket, autoDetect.</li>
+<li>
+<code>timeFormat</code>: The format used to show time values. The default is locale dependent.</li>
+<li>
+<code>timeZone</code>: Sets the time zone in which date/time/date-time values are shown. The default is the time zone of the host machine. Example: GMT+02</li>
+<li>
+<code>numberFormat</code>: The number format used to show numerical values. The default is 0.############</li>
+<li>
+<code>dateFormat</code>: The format used to show date (year+month+day) values. The default is locale dependent.</li>
+<li>
+<code>booleanFormat</code>: The boolean format used to show boolean values, like "Yes,No". Not "true,false"; use ${myBool?c} for that. The default is error on ${myBool}.</li>
+<li>
+<code>datetimeFormat</code>: The format used to show date-time values. The default is locale dependent.</li>
+<li>
+<code>locale</code>: The locale (as ar_SA). Use the special value "host" (-A host) if the default locale of the host machine should be used. The default value of the option is en_US.</li>
+</ul>
 
 <h1>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
@@ -90,12 +122,17 @@ Freemarker.exec(['--version'], function(err, output) {
 
 <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/ijse">ijse</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Freemarker.js maintained by <a href="https://github.com/ijse">ijse</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+
     
+
   </body>
 </html>
