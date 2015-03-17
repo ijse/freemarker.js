@@ -57,4 +57,15 @@ describe('Test freemarker.js', function() {
     });
   });
 
+  it('Could include another template with relative path', function(done) {
+    var fm = new Freemarker({
+      viewRoot: path.join(__dirname, '/template/')
+    });
+
+    fm.render('/subfolder/index.ftl', {}, function(err, data, out) {
+      data.should.be.match(/child partial/);
+      done(err);
+    });
+  })
+
 });

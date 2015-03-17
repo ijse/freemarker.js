@@ -24,15 +24,21 @@ function writeTmpFile(data, done) {
  * @param {Object} settings
  */
 function Freemarker(settings) {
-  var sName = Object.keys(settings.options);
+  var fmpOpts = settings.options || {};
+
+  if(!fmpOpts.sourceRoot) {
+    fmpOpts.sourceRoot = settings.viewRoot;
+  }
+
+  var sName = Object.keys(fmpOpts || {});
   var args = [];
   sName.forEach(function(x) {
-    var v = settings.options[x];
+    var v = fmpOpts[x];
     args.push(stripArg(x, v));
   });
 
   this.viewRoot = settings.viewRoot;
-  this.options = settings.options;
+  this.options = fmpOpts;
   this.stringifyArgs = args;
 }
 
@@ -97,7 +103,8 @@ function stripArg(s, v) {
   var argName = '--' + s.replace(/([A-Z])/g, "-$1").toLowerCase();
   var argValue = v;
   if(typeof v !== 'boolean' && argValue) {
-    result += argName + '="' + argValue + '"';
+    // Because of windows cmd, convert path seperate for now.
+    result += argName + '="' + argValue.replace(/\\/g, '/') + '"';
   } else {
     result += argName;
   }
