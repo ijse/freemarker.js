@@ -1,6 +1,9 @@
 Freemarker.js
 ==============
 
+> FreeMarker is a "template engine". It's a Java package, a class library for Java programmers.
+> ![](http://freemarker.org/images/overview.png)
+
 *Freemarker.js* is bridge API for [fmpp](http://fmpp.sourceforge.net/) to make [Freemarker](http://freemarker.org) available with node.js.
 
 100% language support like Freemarker on Java.
