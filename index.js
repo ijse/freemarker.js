@@ -76,6 +76,24 @@ Freemarker.prototype.render = function(tpl, data, done) {
   });
 };
 
+Freemarker.prototype.renderSync = function(tpl, data) {
+  var dataTdd = convertDataModel(data);
+  var tplFile = path.join(this.viewRoot, tpl);
+  var args = [tplFile, '-D', dataTdd];
+  var tmpFile;
+  var _this = this;
+
+  tmpFile = getTmpFileName();
+  args.push.apply(args, ['-o', tmpFile]);
+  args.push.apply(args, this.stringifyArgs);
+
+  fmpp.runSync(args);
+
+  var result = fs.readFileSync(tmpFile, {encoding: 'utf8'});
+  fs.unlink(tmpFile, nop);
+  return result;
+};
+
 /**
  * Render views in bulk mode
  * @param  {String}   cfgFile configuration file
