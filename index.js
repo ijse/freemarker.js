@@ -8,7 +8,7 @@ var fmpp = require('./lib/fmpp.js');
 
 function nop() {}
 function getTmpFileName() {
-  return path.join(os.tmpDir(), uuid.v4());
+  return path.join(os.tmpDir(), uuid.v4()).replace(/\\/g, '/');
 }
 
 function writeTmpFile(data, done) {
@@ -76,13 +76,16 @@ Freemarker.prototype.render = function(tpl, data, done) {
   var cfgDataObject = this.options;
   cfgDataObject.data = dataTdd;
 
+  // Set output file
+  var tmpFile = getTmpFileName();
+  cfgDataObject.outputFile = tmpFile;
+
   var cfgContent = generateConfiguration(cfgDataObject);
   writeTmpFile(cfgContent, function getCfgFileName(err, cfgFile) {
     if(err) {
       return done(err);
     }
-    var tmpFile = getTmpFileName();
-    var args = [tplFile, '-C', cfgFile, '-o=' + tmpFile];
+    var args = [tplFile, '-C', cfgFile];
     fmpp.run(args, function getFMPPResult(err, respData) {
       if(err) {
         return done(err);
