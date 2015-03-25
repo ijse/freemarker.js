@@ -93,7 +93,7 @@ Freemarker.exec = fmpp.run;
  * @return {String}      [description]
  */
 function convertDataModel(data) {
-  return JSON.stringify(data);
+  return "'" + JSON.stringify(data) + "'";
 }
 
 /**
