@@ -45,7 +45,7 @@ describe('Test freemarker.js', function() {
     });
 
     fm.render('test.ftl', {
-      word: 'Jack'
+      word: 'Jack Jones'
     }, function(err, data, out) {
       (!!!err).should.be.true;
       data.should.be.match(/Jack/);
