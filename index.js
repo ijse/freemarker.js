@@ -97,28 +97,7 @@ Freemarker.prototype.render = function(tpl, data, done) {
 
   });
 
-  return
-
-
-
-  var args = [tplFile, '-D', dataTdd];
-  var tmpFile;
-  var _this = this;
-
-  tmpFile = getTmpFileName();
-  args.push.apply(args, ['-o', tmpFile]);
-
-  fmpp.run(args, function(err, respData) {
-    if(err) {
-      return done(err);
-    }
-
-    fs.readFile(tmpFile, function(err, result) {
-      done(err, '' + result, respData);
-      fs.unlink(tmpFile, nop);
-    });
-
-  });
+  return ;
 };
 
 /**
