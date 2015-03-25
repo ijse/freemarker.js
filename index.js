@@ -32,36 +32,81 @@ function Freemarker(settings) {
   if(!fmpOpts.sourceRoot) {
     fmpOpts.sourceRoot = settings.viewRoot;
   }
+  if(!fmpOpts.outputRoot) {
+    fmpOpts.outputRoot = os.tmpDir();
+  }
 
-  var sName = Object.keys(fmpOpts || {});
-  var args = [];
-  sName.forEach(function(x) {
-    var v = fmpOpts[x];
-    args.push(stripArg(x, v));
-  });
+  // Convert folder seperate in case of Windows
+  fmpOpts.sourceRoot = fmpOpts.sourceRoot.replace(/\\/g, '/');
+  fmpOpts.outputRoot = fmpOpts.outputRoot.replace(/\\/g, '/');
 
   this.viewRoot = settings.viewRoot;
   this.options = fmpOpts;
-  this.stringifyArgs = args;
 }
 
+/**
+ * Convert Object to fmpp configuration content
+ *   with TDD syntax, see also http://fmpp.sourceforge.net/tdd.html
+ *
+ * @param  {Object}   data resource data
+ * @return {String} result
+ */
+function generateConfiguration(data, done) {
+  var sName = Object.keys(data || {});
+  var result = [];
+  sName.forEach(function(x) {
+    var value = data[x];
+    if(typeof value !== 'boolean') {
+      result.push(x + ': ' + value);
+    } else if(value === true) {
+      // For boolean settings, empty-string is considered as true
+      result.push(x);
+    }
+  });
 
-Freemarker.version = require('./package.json').version;
-Freemarker.getFMPPVersion = function getFMPPVersion(cb) {
-  fmpp.run(['--version'], cb);
-};
+  return result.join('\n');
+}
 
 
 Freemarker.prototype.render = function(tpl, data, done) {
   var dataTdd = convertDataModel(data);
-  var tplFile = path.join(this.viewRoot, tpl);
+  var tplFile = path.join(this.viewRoot, tpl).replace(/\\/g, '/');
+
+  // Make configuration file for fmpp
+  var cfgDataObject = this.options;
+  cfgDataObject.data = dataTdd;
+
+  var cfgContent = generateConfiguration(cfgDataObject);
+  writeTmpFile(cfgContent, function getCfgFileName(err, cfgFile) {
+    if(err) {
+      return done(err);
+    }
+    var tmpFile = getTmpFileName();
+    var args = [tplFile, '-C', cfgFile, '-o=' + tmpFile];
+    fmpp.run(args, function getFMPPResult(err, respData) {
+      if(err) {
+        return done(err);
+      }
+
+      fs.readFile(tmpFile, function(err, result) {
+        done(err, '' + result, respData);
+        fs.unlink(tmpFile, nop);
+        fs.unlink(cfgFile, nop);
+      });
+    });
+
+  });
+
+  return
+
+
+
   var args = [tplFile, '-D', dataTdd];
   var tmpFile;
   var _this = this;
 
   tmpFile = getTmpFileName();
   args.push.apply(args, ['-o', tmpFile]);
-  args.push.apply(args, this.stringifyArgs);
 
   fmpp.run(args, function(err, respData) {
     if(err) {
@@ -93,25 +138,13 @@ Freemarker.exec = fmpp.run;
  * @return {String}      [description]
  */
 function convertDataModel(data) {
-  return JSON.stringify(data);
+  return JSON.stringify(data, true, ' ');
 }
 
-/**
- * Strip parameter word
- * @param  {String} s
- * @return {String}   [description]
- */
-function stripArg(s, v) {
-  var result = '';
-  var argName = '--' + s.replace(/([A-Z])/g, "-$1").toLowerCase();
-  var argValue = v;
-  if(typeof v !== 'boolean' && argValue) {
-    // Because of windows cmd, convert path seperate for now.
-    result += argName + '="' + argValue.replace(/\\/g, '/') + '"';
-  } else {
-    result += argName;
-  }
-  return result;
-}
+
+Freemarker.version = require('./package.json').version;
+Freemarker.getFMPPVersion = function getFMPPVersion(cb) {
+  fmpp.run(['--version'], cb);
+};
 
 module.exports = Freemarker;
