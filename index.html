@@ -59,26 +59,26 @@
 <h1>
 <a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use</h1>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-s">var</span> Freemarker <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>freemarker.js<span class="pl-pds">'</span></span>);
-<span class="pl-s">var</span> fm <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Freemarker</span>({
-  viewRoot<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>/template<span class="pl-pds">'</span></span>,
+<div class="highlight highlight-javascript"><pre><span class="pl-k">var</span> Freemarker <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>freemarker.js<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> fm <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Freemarker</span>({
+  viewRoot<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>/template<span class="pl-pds">'</span></span>,
   options<span class="pl-k">:</span> {
     <span class="pl-c">/** for fmpp */</span>
   }
 });
 
 <span class="pl-c">// Single template file</span>
-fm.render(tpl, dataObject, <span class="pl-st">function</span>(<span class="pl-vpf">err</span>, <span class="pl-vpf">html</span>, <span class="pl-vpf">output</span>) {
+fm.render(tpl, dataObject, <span class="pl-k">function</span>(<span class="pl-smi">err</span>, <span class="pl-smi">html</span>, <span class="pl-smi">output</span>) {
   <span class="pl-c">//...</span>
 });
 
 <span class="pl-c">// Use fmpp configuration file, see `http://fmpp.sourceforge.net/configfile.html`</span>
-fm.renderBulk(cfgFile, <span class="pl-st">function</span>(<span class="pl-vpf">err</span>) {
+fm.renderBulk(cfgFile, <span class="pl-k">function</span>(<span class="pl-smi">err</span>) {
   <span class="pl-c">//...</span>
 });
 
 <span class="pl-c">// Other</span>
-Freemarker.<span class="pl-s3">exec</span>([<span class="pl-s1"><span class="pl-pds">'</span>--version<span class="pl-pds">'</span></span>], <span class="pl-st">function</span>(<span class="pl-vpf">err</span>, <span class="pl-vpf">output</span>) {
+Freemarker.<span class="pl-c1">exec</span>([<span class="pl-s"><span class="pl-pds">'</span>--version<span class="pl-pds">'</span></span>], <span class="pl-k">function</span>(<span class="pl-smi">err</span>, <span class="pl-smi">output</span>) {
   <span class="pl-c">//</span>
 });
 </pre></div>
@@ -132,7 +132,17 @@ Freemarker.<span class="pl-s3">exec</span>([<span class="pl-s1"><span class="pl-
       </footer>
     </div>
 
-    
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-38157829-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
 
   </body>
 </html>
