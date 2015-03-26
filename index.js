@@ -17,6 +17,11 @@ function writeTmpFile(data, done) {
     done(err, fileName);
   });
 }
+function writeTmpFileSync(data) {
+  var fileName = getTmpFileName();
+  fs.writeFileSync(fileName, data);
+  return fileName;
+}
 
 /**
  * Freemarker Class
@@ -105,20 +110,33 @@ Freemarker.prototype.render = function(tpl, data, done) {
 
 Freemarker.prototype.renderSync = function(tpl, data) {
   var dataTdd = convertDataModel(data);
-  var tplFile = path.join(this.viewRoot, tpl);
-  var args = [tplFile, '-D', dataTdd];
-  var tmpFile;
-  var _this = this;
+  var tplFile = path.join(this.viewRoot, tpl).replace(/\\/g, '/');
 
-  tmpFile = getTmpFileName();
-  args.push.apply(args, ['-o', tmpFile]);
-  args.push.apply(args, this.stringifyArgs);
+  // Make configuration file for fmpp
+  var cfgDataObject = this.options;
+  cfgDataObject.data = dataTdd;
 
-  fmpp.runSync(args);
+  // Set output file
+  var tmpFile = getTmpFileName();
+  cfgDataObject.outputFile = tmpFile;
 
-  var result = fs.readFileSync(tmpFile, {encoding: 'utf8'});
-  fs.unlink(tmpFile, nop);
-  return result;
+  var cfgContent = generateConfiguration(cfgDataObject);
+
+  var output = null;
+  var result = '';
+  try {
+    var cfgFile = writeTmpFileSync(cfgContent);
+    var args = [tplFile, '-C', cfgFile];
+    output = fmpp.runSync(args);
+
+    // Wait for tmpFile created
+    while(!fs.existsSync(tmpFile)){}
+    result = fs.readFileSync(tmpFile);
+  } catch(e) {
+    output = e;
+  }
+
+  return ''+result || output;
 };
 
 /**
