@@ -36,6 +36,9 @@ fm.render(tpl, dataObject, function(err, html, output) {
   //...
 });
 
+// Sync render
+var result = fm.renderSync(tpl, dataObject);
+
 // Use fmpp configuration file, see `http://fmpp.sourceforge.net/configfile.html`
 fm.renderBulk(cfgFile, function(err) {
   //...
