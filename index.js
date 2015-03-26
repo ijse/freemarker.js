@@ -17,6 +17,11 @@ function writeTmpFile(data, done) {
     done(err, fileName);
   });
 }
+function writeTmpFileSync(data) {
+  var fileName = getTmpFileName();
+  fs.writeFileSync(fileName, data);
+  return fileName;
+}
 
 /**
  * Freemarker Class
@@ -101,6 +106,37 @@ Freemarker.prototype.render = function(tpl, data, done) {
   });
 
   return ;
+};
+
+Freemarker.prototype.renderSync = function(tpl, data) {
+  var dataTdd = convertDataModel(data);
+  var tplFile = path.join(this.viewRoot, tpl).replace(/\\/g, '/');
+
+  // Make configuration file for fmpp
+  var cfgDataObject = this.options;
+  cfgDataObject.data = dataTdd;
+
+  // Set output file
+  var tmpFile = getTmpFileName();
+  cfgDataObject.outputFile = tmpFile;
+
+  var cfgContent = generateConfiguration(cfgDataObject);
+
+  var output = null;
+  var result = '';
+  try {
+    var cfgFile = writeTmpFileSync(cfgContent);
+    var args = [tplFile, '-C', cfgFile];
+    output = fmpp.runSync(args);
+
+    // Wait for tmpFile created
+    while(!fs.existsSync(tmpFile)){}
+    result = fs.readFileSync(tmpFile);
+  } catch(e) {
+    output = e;
+  }
+
+  return ''+result || output;
 };
 
 /**

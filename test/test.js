@@ -40,7 +40,6 @@ describe('Test freemarker.js', function() {
       viewRoot: path.join(__dirname, './template'),
 
       options: {
-        replaceExtensions: "[ftl,html]"
       }
     });
 
@@ -73,5 +72,20 @@ describe('Test freemarker.js', function() {
       done(err);
     });
   })
+
+  it('sync render', function() {
+    var fm = new Freemarker({
+      viewRoot: path.join(__dirname, './template/'),
+
+      options: {
+      }
+    });
+
+    var data = fm.renderSync('test.ftl', {word: 'Jack'});
+    data.should.be.match(/Jack/);
+    data.should.be.match(/中文/);
+    data.should.be.match(/¥/);
+    data.should.be.match(/child partial/);
+  });
 
 });
