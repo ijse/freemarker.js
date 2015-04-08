@@ -1,6 +1,8 @@
 Freemarker.js
 ==============
 
+[![Join the chat at https://gitter.im/ijse/freemarker.js](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ijse/freemarker.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 > FreeMarker is a "template engine". It's a Java package, a class library for Java programmers.
 > ![](http://freemarker.org/images/overview.png)
 
