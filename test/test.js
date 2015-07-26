@@ -37,18 +37,17 @@ describe('Test freemarker.js', function() {
 
   it('Create new Freemarker.js instance', function(done) {
     var fm = new Freemarker({
-      viewRoot: path.join(__dirname, './template/'),
+      viewRoot: path.join(__dirname, './template'),
 
       options: {
-        replaceExtensions: "ftl,html"
       }
     });
 
     fm.render('test.ftl', {
-      word: 'Jack'
+      word: 'Jack Jone'
     }, function(err, data, out) {
       (!!!err).should.be.true;
-      data.should.be.match(/Jack/);
+      data.should.be.match(/Jack Jone/);
       data.should.be.match(/中文/);
       data.should.be.match(/¥/);
       data.should.be.match(/child partial/);
@@ -73,5 +72,20 @@ describe('Test freemarker.js', function() {
       done(err);
     });
   })
+
+  it('sync render', function() {
+    var fm = new Freemarker({
+      viewRoot: path.join(__dirname, './template/'),
+
+      options: {
+      }
+    });
+
+    var data = fm.renderSync('test.ftl', {word: 'Jack'});
+    data.should.be.match(/Jack/);
+    data.should.be.match(/中文/);
+    data.should.be.match(/¥/);
+    data.should.be.match(/child partial/);
+  });
 
 });

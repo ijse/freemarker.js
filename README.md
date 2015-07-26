@@ -1,5 +1,7 @@
-Freemarker.js
+Freemarker.js http://freemarker.js.org
 ==============
+
+[![Join the chat at https://gitter.im/ijse/freemarker.js](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ijse/freemarker.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 > FreeMarker is a "template engine". It's a Java package, a class library for Java programmers.
 > ![](http://freemarker.org/images/overview.png)
@@ -35,6 +37,9 @@ var fm = new Freemarker({
 fm.render(tpl, dataObject, function(err, html, output) {
   //...
 });
+
+// Sync render
+var result = fm.renderSync(tpl, dataObject);
 
 // Use fmpp configuration file, see `http://fmpp.sourceforge.net/configfile.html`
 fm.renderBulk(cfgFile, function(err) {

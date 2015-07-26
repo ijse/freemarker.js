@@ -1,6 +1,6 @@
 {
   "name": "freemarker.js",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "description": "Make freemarker available for node.js with FMPP.",
   "main": "index.js",
   "scripts": {
