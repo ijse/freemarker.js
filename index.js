@@ -93,7 +93,7 @@ Freemarker.prototype.render = function(tpl, data, done) {
     var args = [tplFile, '-C', cfgFile];
     fmpp.run(args, function getFMPPResult(err, respData) {
       if(err) {
-        return done(err);
+        return done(err,null,respData);
       }
 
       fs.readFile(tmpFile, function(err, result) {
