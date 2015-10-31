@@ -67,6 +67,9 @@ Avaliable options for fmpp:
  * `datetimeFormat`: The format used to show date-time values. The default is locale dependent.
  * `locale`: The locale (as ar_SA). Use the special value "host" (-A host) if the default locale of the host machine should be used. The default value of the option is en_US.
 
+# Notes
+While using this module make sure you have correctly set your `JAVA_HOME` environment variable.
+
 # License
 
 (The MIT License)
