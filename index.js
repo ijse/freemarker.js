@@ -91,9 +91,9 @@ Freemarker.prototype.render = function(tpl, data, done) {
       return done(err);
     }
     var args = [tplFile, '-C', cfgFile];
-    fmpp.run(args, function getFMPPResult(err, respData) {
-      if(err) {
-        return done(err,null,respData);
+    fmpp.run(args, function getFMPPResult(err, respData, respError) {
+      if(err || respError) {
+        return done(err, null, respData, respError);
       }
 
       fs.readFile(tmpFile, function(err, result) {
