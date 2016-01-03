@@ -22,6 +22,8 @@ Freemarker.js http://freemarker.js.org
 npm install freemarker.js
 ```
 
+ Requires Java to be installed on your machine (version 1.4 or later).
+
 # How to use
 
 ```javascript
