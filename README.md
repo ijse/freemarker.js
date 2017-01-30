@@ -1,6 +1,7 @@
 Freemarker.js http://freemarker.js.org
 ==============
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/15aff9c747274956a17876fd9b8d5879)](https://www.codacy.com/app/ijse/freemarker-js?utm_source=github.com&utm_medium=referral&utm_content=ijse/freemarker.js&utm_campaign=badger)
 [![Join the chat at https://gitter.im/ijse/freemarker.js](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ijse/freemarker.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 > FreeMarker is a "template engine". It's a Java package, a class library for Java programmers.
