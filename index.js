@@ -32,11 +32,15 @@ function Freemarker(settings) {
   var fmpOpts = settings.options || {};
 
   if(!settings.sourceRoot) {
-    throw new Error('Freemarker: Need sourceRoot param.')
+    if(settings.viewRoot) {
+      fmpOpts.sourceRoot = settings.viewRoot;
+    }else {
+      throw new Error('Freemarker: Need sourceRoot or viewRoot param.')
+    }
+  }else {
+    fmpOpts.sourceRoot = settings.sourceRoot;
   }
-
-  fmpOpts.sourceRoot = settings.sourceRoot;
-
+  
   if(!fmpOpts.outputRoot) {
     fmpOpts.outputRoot = os.tmpDir();
   }
