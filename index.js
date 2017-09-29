@@ -31,12 +31,12 @@ function writeTmpFileSync(data) {
 function Freemarker(settings) {
   var fmpOpts = settings.options || {};
 
-  if(!settings.viewRoot) {
-    throw new Error('Freemarker: Need viewRoot param.')
+  if(!settings.sourceRoot) {
+    throw new Error('Freemarker: Need sourceRoot param.')
   }
-  if(!fmpOpts.sourceRoot) {
-    fmpOpts.sourceRoot = settings.viewRoot;
-  }
+
+  fmpOpts.sourceRoot = settings.sourceRoot;
+
   if(!fmpOpts.outputRoot) {
     fmpOpts.outputRoot = os.tmpDir();
   }
@@ -45,7 +45,7 @@ function Freemarker(settings) {
   fmpOpts.sourceRoot = fmpOpts.sourceRoot.replace(/\\/g, '/');
   fmpOpts.outputRoot = fmpOpts.outputRoot.replace(/\\/g, '/');
 
-  this.viewRoot = settings.viewRoot;
+  this.viewRoot = settings.viewRoot || '';
   this.options = fmpOpts;
 }
 
