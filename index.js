@@ -8,7 +8,7 @@ var fmpp = require('./lib/fmpp.js');
 
 function nop() {}
 function getTmpFileName() {
-  return path.join(os.tmpDir(), uuid.v4()).replace(/\\/g, '/');
+  return path.join(os.tmpdir(), uuid.v4()).replace(/\\/g, '/');
 }
 
 function writeTmpFile(data, done) {
@@ -38,7 +38,7 @@ function Freemarker(settings) {
     fmpOpts.sourceRoot = settings.viewRoot;
   }
   if(!fmpOpts.outputRoot) {
-    fmpOpts.outputRoot = os.tmpDir();
+    fmpOpts.outputRoot = os.tmpdir();
   }
 
   // Convert folder seperate in case of Windows
