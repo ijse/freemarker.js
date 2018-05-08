@@ -1,6 +1,7 @@
 Freemarker.js http://freemarker.js.org
 ==============
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/15aff9c747274956a17876fd9b8d5879)](https://www.codacy.com/app/ijse/freemarker-js?utm_source=github.com&utm_medium=referral&utm_content=ijse/freemarker.js&utm_campaign=badger)
 [![Join the chat at https://gitter.im/ijse/freemarker.js](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ijse/freemarker.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fijse%2Ffreemarker.js.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fijse%2Ffreemarker.js?ref=badge_shield)
 
