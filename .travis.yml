@@ -1,6 +1,6 @@
 language: java
 jdk:
-    - oraclejdk8
+    - openjdk8
 node_js: "8"
 install: "npm install"
 script: "npm test"
