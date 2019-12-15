@@ -79,31 +79,35 @@ Freemarker.prototype.render = function(tpl, data, done) {
 
   // Make configuration file for fmpp
   var cfgDataObject = this.options;
-  cfgDataObject.data = dataTdd;
-
-  // Set output file
-  var tmpFile = getTmpFileName();
-  cfgDataObject.outputFile = tmpFile;
-
-  var cfgContent = generateConfiguration(cfgDataObject);
-  writeTmpFile(cfgContent, function getCfgFileName(err, cfgFile) {
+  writeTmpFile(dataTdd, function(err, dataFile) {
     if(err) {
       return done(err);
     }
-    var args = [tplFile, '-C', cfgFile];
-    fmpp.run(args, function getFMPPResult(err, respData) {
-      if(err) {
-        return done(err,null,respData);
-      }
+    cfgDataObject.data = "json('" + dataFile + "')";;
 
-      fs.readFile(tmpFile, function(err, result) {
-        done(err, '' + result, respData);
-        fs.unlink(tmpFile, nop);
-        fs.unlink(cfgFile, nop);
+    // Set output file
+    var tmpFile = getTmpFileName();
+    cfgDataObject.outputFile = tmpFile;
+
+    var cfgContent = generateConfiguration(cfgDataObject);
+    writeTmpFile(cfgContent, function getCfgFileName(err, cfgFile) {
+      if(err) {
+        return done(err);
+      }
+      var args = [tplFile, '-C', cfgFile];
+      fmpp.run(args, function getFMPPResult(err, respData) {
+        if(err) {
+          return done(err,null,respData);
+        }
+
+        fs.readFile(tmpFile, function(err, result) {
+          done(err, '' + result, respData);
+          fs.unlink(tmpFile, nop);
+          fs.unlink(cfgFile, nop);
+        });
       });
     });
-
-  });
+  })
 
   return ;
 };
@@ -114,7 +118,8 @@ Freemarker.prototype.renderSync = function(tpl, data) {
 
   // Make configuration file for fmpp
   var cfgDataObject = this.options;
-  cfgDataObject.data = dataTdd;
+  var dataFile = writeTmpFileSync(dataTdd);
+  cfgDataObject.data = "json('" + dataFile + "')";
 
   // Set output file
   var tmpFile = getTmpFileName();

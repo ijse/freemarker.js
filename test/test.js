@@ -73,7 +73,7 @@ describe('Test freemarker.js', function() {
     });
   })
 
-  it('sync render', function() {
+  it('sync render', function(done) {
     var fm = new Freemarker({
       viewRoot: path.join(__dirname, './template/'),
 
@@ -81,11 +81,32 @@ describe('Test freemarker.js', function() {
       }
     });
 
-    var data = fm.renderSync('test.ftl', {word: 'Jack'});
+    fm.render('test.ftl', {word: 'Jack', nullable: null}, function(err, data) {
+      (!!!err).should.be.true;
+      data.should.be.match(/Jack/);
+      data.should.be.match(/中文/);
+      data.should.be.match(/¥/);
+      data.should.be.match(/child partial/);
+      data.should.be.match(/is nullable/);
+
+      done();
+    });
+  });
+
+  it('sync render sync', function() {
+    var fm = new Freemarker({
+      viewRoot: path.join(__dirname, './template/'),
+
+      options: {
+      }
+    });
+
+    var data = fm.renderSync('test.ftl', {word: 'Jack', nullable: null});
     data.should.be.match(/Jack/);
     data.should.be.match(/中文/);
     data.should.be.match(/¥/);
     data.should.be.match(/child partial/);
+    data.should.be.match(/is nullable/);
   });
 
 });

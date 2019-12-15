@@ -16,5 +16,13 @@ Current time: ${.now}
 
 ---
 
+<#if nullable??>
+    not nullable
+<#else>
+    is nullable
+</#if>
+
+---
+
 <#include "/child.ftl" />
 
